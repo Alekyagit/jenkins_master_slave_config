@@ -1,0 +1,5 @@
+Creating a Freestyle Project and Running on The Slave Machine
+Click on Save  and it will redirect to job's view page
+On the left pane, click the Build Now button to execute your Pipeline.
+We can verify the history of the executed build under the Build History by clicking the build number.
+Click on the build number and select Console Output. Here you can see the executed job in the remote host and output.Console output
