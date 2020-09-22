@@ -1,0 +1,29 @@
+Creating a Pipeline and Running on The Slave Machine
+Click New Item in the top left corner on the dashboard.
+Enter the name of your project in the Enter an item name field, and select the Pipeline project, and click OK button.
+Enter Description (optional).
+Go to the Pipeline section, make sure the Definition field has the Pipeline script option selected.
+Copy and paste the following declarative Pipeline script into a script field.
+<<<<<<<
+node('test_slave'){
+stage('stage1') {
+sh '''echo  stage1 steps'''
+}
+stage('stage2') {
+sh '''echo stage2 steps'''
+}
+stage('stage3') {
+sh '''echo stage3 steps'''
+}
+}
+Pipeline
+>>>>>>>>>>
+6. Click on Save, it will redirect to the Pipeline view page.
+
+7. On the left pane, click the Build Now button to execute your Pipeline.
+
+8. After Pipeline execution is completed, the Pipeline view will be as shown below.
+
+9. We can verify the history of executed build under the Build History by clicking the build number.
+
+10. Click on build number and select Console Output. Here you can see that the pipeline ran on a slave machine.
