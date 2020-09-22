@@ -1,0 +1,131 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\colortbl ;\red0\green0\blue255;\red255\green255\blue0;}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 Manuall installation of redis link:\par
+ubuntu 18.0 link\par
+{{\field{\*\fldinst{HYPERLINK https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04#:~:text=and%20continue%20below.-,Step%201%20%E2%80%94%20Installing%20and%20Configuring%20Redis,sudo%20apt%20install%20redis%2Dserver }}{\fldrslt{https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04#:~:text=and%20continue%20below.-,Step%201%20%E2%80%94%20Installing%20and%20Configuring%20Redis,sudo%20apt%20install%20redis%2Dserver\ul0\cf0}}}}\f0\fs22\par
+\b centos 7 Link\par
+{\b0{\field{\*\fldinst{HYPERLINK https://linuxize.com/post/how-to-install-and-configure-redis-on-centos-7/ }}{\fldrslt{https://linuxize.com/post/how-to-install-and-configure-redis-on-centos-7/\ul0\cf0}}}}\b0\f0\fs22\par
+\par
+
+\pard 
+{\pntext\f0 1.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+\fi-360\li720\sa200\sl276\slmult1 sudo apt update\par
+{\pntext\f0 2.\tab}sudo apt install redis\par
+{\pntext\f0 3.\tab}sudo nano /etc/redis/redis.conf     <#change this supervised systemd>\par
+{\pntext\f0 4.\tab}sudo systemctl restart redis\par
+{\pntext\f0 5.\tab}redis-cli  <#it will take you to the redis cli >\par
+
+\pard\sa200\sl276\slmult1\b Uninstall Redis after manual Installation\par
+
+\pard 
+{\pntext\f0 1.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+\fi-360\li720\sa200\sl276\slmult1\b0 ubuntu@node:~$ sudo systemctl stop redis\par
+{\pntext\f0 2.\tab}ubuntu@node:~$ sudo systemctl disable redis\line   \tab Removed /etc/systemd/system/redis.service.\line\tab Removed /etc/systemd/system/multi-user.target.wants/redis-server.service.\par
+{\pntext\f0 3.\tab}ubuntu@node:~$ sudo rm /etc/redis/redis.conf\par
+{\pntext\f0 4.\tab}ubuntu@node:~$ sudo rm -rf /var/lib/redis\par
+{\pntext\f0 5.\tab}ubuntu@node:~$ sudo deluser redis\par
+
+\pard\sa200\sl276\slmult1 Removing user `redis' ...\par
+Warning: group `redis' has no more members.\par
+Done.\par
+If ua getting any error while installing another package like as follows;\par
+\b ERROR\b0 : dpkg: unrecoverable fatal error, aborting: unknown user 'redis' in statoverride file E: Sub-process /usr/bin/dpkg returned an error code (2)\par
+\b Debug\b0 : {{\field{\*\fldinst{HYPERLINK https://www.richud.com/wiki/Ubuntu_Dpkg:_unrecoverable_fatal_error }}{\fldrslt{https://www.richud.com/wiki/Ubuntu_Dpkg:_unrecoverable_fatal_error\ul0\cf0}}}}\f0\fs22\par
+\b Deploy And Run redis in Docker:\par
+Link: {{\field{\*\fldinst{HYPERLINK https://phoenixnap.com/kb/docker-redis }}{\fldrslt{https://phoenixnap.com/kb/docker-redis\ul0\cf0}}}}\f0\fs22\par
+
+\pard 
+{\pntext\f0 1.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+\fi-360\li720\sa200\sl276\slmult1\b0 sudo systemctl status docker\par
+{\pntext\f0 2.\tab}sudo systemctl start docker\par
+{\pntext\f0 3.\tab}sudo systemctl status docker\par
+{\pntext\f0 4.\tab}sudo docker run --name redis1 -d redis\par
+{\pntext\f0 5.\tab}sudo docker ps\par
+{\pntext\f0 6.\tab}sudo docker exec -it redis1 sh\par
+
+\pard\sa200\sl276\slmult1\b Creating docker redis container:\par
+\b0 create alekredis container as follows;\par
+docker run --name alekredis -d redis\par
+docker ps\par
+\b Let\rquote s connect to redis-cli of our Redis container; --------- \b0 docker exec -it alekredis redis-cli\par
+\par
+\b How to know ip of Host---------- \b0 $ curl ip.me\par
+\b how to know ip of container---------- \b0 $  docker inspect <container id>\par
+\par
+\par
+\b\fs28  Ansible keygeneration:\par
+Link: {{\field{\*\fldinst{HYPERLINK https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04 }}{\fldrslt{https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04\ul0\cf0}}}}\f0\fs28\par
+\fs22 install steps:\par
+sudo apt-add-repository ppa:ansible/ansible\par
+sudo apt update\par
+sudo apt install ansible\par
+sudo nano /etc/ansible/hosts\par
+ \{ #Add these lines in bottom  \par
+\b0 [servers]\par
+server1 ansible_host=203.0.113.111\par
+server2 ansible_host=203.0.113.112\par
+server3 ansible_host=203.0.113.113\par
+[all:vars]\par
+ansible_python_interpreter=/usr/bin/python3\par
+\b root@ip-172-31-66-173: ansible-inventory --list -y\par
+root@ip-172-31-66-173:~# ssh-keygen\par
+root@ip-172-31-66-173:~# cd .ssh\par
+root@ip-172-31-66-173:~/.ssh# ls\par
+\b0 authorized_keys  id_rsa  id_rsa.pub \par
+\b root@ansi:~/.ssh# cat id_rsa.pub\par
+\b0 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDvlzRYso/XJQhsyLwK4mLrFZFTDw0/PhnTqSX5HyIukGy6rc+Wa0Y4L4TIvzTl6wsDPWdsMm6ni2vw6Q/Puzf1B4lb90QDcXCqn30wUf8CQrY8smjSFymjIA36bxlNxVWF1GcXYq8Dm1XiStYGlSbksDwD/uEXd+Vlskjur2QWZzZr9JxZbGBg+y5Y+eGrgj9TargDvjm6DR5U1cKMSfs/xh4IwbH+iWJNyR0oGL9gB33ZNHxSJsXEQnFoLDeARfJaGdjQLqfSE3lpGk3FVXcIXi8i0mOWIgdNH63ObPsiIXe/arYkrPu2gritMsZ/TQMtJtm/2mpDKgtUUXq2ZR1tfxNp6FpnKSrhYSiolu4GJlqEyuJFF2mWAEPXc3UDRo68KpaQD2GM/CeqDfoBrndELtfgiLU5gAPqwnYIzdO8hsEJ0nDSCxnuYiJ9aRKZ4Vh79ONW5JW+xgtkyRxtMFU2Jlg4cxwh5dQHjsCPRSLhEyqgGrvxAnL0x3TBunuWqfc= root@ansi\par
+\b root@ansi:~# cd .ssh/\par
+root@ansi:~/.ssh# ls\par
+\b0 authorized_keys  id_rsa  id_rsa.pub\par
+\b root@ansi:~/.ssh# vi authorized_keys\par
+\b0 copy the above pub key in both master and nodes\par
+\b root@ansi:~# ansible -m ping all\par
+\b0 Error:  "msg": "Failed to connect to the host via ssh: Host key verification failed." "unreachable": true\par
+Unable to ping nodes then run the following command in all \b\par
+root@ansi:~# export ANSIBLE_HOST_KEY_CHECKING=False\b0\par
+\b root@ansi:~# ansible -m ping all\par
+\b0 Done with Ansible installation;\par
+\par
+\b\fs32 Kubespray Configuration\par
+Link: {{\field{\*\fldinst{HYPERLINK https://docs.mellanox.com/pages/releaseview.action?pageId=19818992 }}{\fldrslt{https://docs.mellanox.com/pages/releaseview.action?pageId=19818992\ul0\cf0}}}}\f0\fs32\par
+\b0\fs22 Please install dependencies for running Kubespray with Ansible on the Management server:\par
+\b # cd ~\par
+# apt -y install python3-pip\par
+# git clone {{\field{\*\fldinst{HYPERLINK https://github.com/kubernetes-sigs/kubespray.git }}{\fldrslt{https://github.com/kubernetes-sigs/kubespray.git\ul0\cf0}}}}\f0\fs22\par
+# cd kubespray\par
+# pip3 install -r requirements.txt\par
+# cp -rfp inventory/sample inventory/mycluster\par
+# declare -a IPS=(172.31.66.173 172.31.68.9 172.31.67.133)\par
+# CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inventory.py $\{IPS[@]\}\fs32\par
+\fs22 -----Install K8s Cluster Using Ansible Playbook :Deploy K8s cluster with Kubespray Ansible Playbook:\par
+# ansible-playbook -i inventory/mycluster/hosts.yaml --become --become-user=root cluster.yml\par
+\b0 The execution time for this step may take a while to finalize.\par
+\b if you get anyerror in the node1 i.e, master like as follows:\par
+Error\b0 : fatal: [node1]: FAILED! => \{"changed": false, "msg": "Failed to update apt cache: W:Updating from such          a repository can't be done securely, and is therefore disabled by default., W:See apt-secure(8) manpa         ge for repository creation and user configuration details., E:The repository '{{\field{\*\fldinst{HYPERLINK http://ppa.launchpad.net }}{\fldrslt{http://ppa.launchpad.net\ul0\cf0}}}}\f0\fs22     /ansible/ansible/ubuntu focal Release' does not have a Release file.\par
+Debug : when we do apt-get update also it will give error like follows follow link: {{\field{\*\fldinst{HYPERLINK https://askubuntu.com/questions/65911/how-can-i-fix-a-404-error-when-using-a-ppa-or-updating-my-package-lists }}{\fldrslt{https://askubuntu.com/questions/65911/how-can-i-fix-a-404-error-when-using-a-ppa-or-updating-my-package-lists\ul0\cf0}}}}\f0\fs22\par
+W: Failed to fetch {{\field{\*\fldinst{HYPERLINK http://ppa.launchpad.net/ }}{\fldrslt{http://ppa.launchpad.net/\ul0\cf0}}}}\f0\fs22  404  Not Found \par
+where are these software-sources\par
+PPAs typically are saved in one of two locations\par
+\par
+\b /etc/apt/sources.list\par
+\b0 in an appropriately named file with a .list file-extension in /etc/apt/sources.list.d/ for example webupd8team-jupiter-natty.list\par
+This list file typically contains:\par
+\par
+\highlight2\b deb {{\field{\*\fldinst{HYPERLINK http://ppa.launchpad.net/webupd8team/jupiter/ubuntu }}{\fldrslt{http://ppa.launchpad.net/webupd8team/jupiter/ubuntu\ul0\cf0}}}}\f0\fs22  oneiric main\b0 ------\highlight0 1\par
+\b # deb-src {{\field{\*\fldinst{HYPERLINK http://ppa.launchpad.net/webupd8team/jupiter/ubuntu }}{\fldrslt{http://ppa.launchpad.net/webupd8team/jupiter/ubuntu\ul0\cf0}}}}\f0\fs22  oneiric main-----2\par
+\b0 Note a # at the front of a line of text means that it is commented out and is not checked by the package manager.\par
+Here i commented the first (1) one with # then we got the output;\par
+\par
+root@node1:~/kubespray# kubectl get nodes\par
+NAME    STATUS   ROLES    AGE     VERSION\par
+node1   Ready    master   4m12s   v1.19.2\par
+node2   Ready    master   3m40s   v1.19.2\par
+node3   Ready    <none>   2m47s   v1.19.2\par
+\par
+\b Installing helm in this kubespray using the following steps:\par
+\b0 In the cluster.yml file we need to add following commands to run helm\par
+which was send my satish in mail\par
+\par
+}
+ 
