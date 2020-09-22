@@ -57,7 +57,6 @@ docker ps\par
 \b\fs28  Ansible keygeneration:\par
 Link: {{\field{\*\fldinst{HYPERLINK https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04 }}{\fldrslt{https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04\ul0\cf0}}}}\f0\fs28\par
 \fs22 install steps:\par
-sudo apt-add-repository ppa:ansible/ansible\par
 sudo apt update\par
 sudo apt install ansible\par
 sudo nano /etc/ansible/hosts\par
@@ -125,7 +124,96 @@ node3   Ready    <none>   2m47s   v1.19.2\par
 \par
 \b Installing helm in this kubespray using the following steps:\par
 \b0 In the cluster.yml file we need to add following commands to run helm\par
-which was send my satish in mail\par
+which was sent to me by satish in mail\par
 \par
+\b 22/9/20\par
+\fs32 How to Install manually Jenkins on CentOS 7 \highlight2 master \highlight0 :\par
+Link: {{\field{\*\fldinst{HYPERLINK https://linuxize.com/post/how-to-install-jenkins-on-centos-7/ }}{\fldrslt{https://linuxize.com/post/how-to-install-jenkins-on-centos-7/\ul0\cf0}}}}\f0\fs32\par
+\b0\fs22 Jenkins is a Java application , so the first step is to install Java\par
+------sudo yum install java-1.8.0-openjdk-devel\par
+ To enable the Jenkins repository,  To do that, import the GPG key using the following curl command:\par
+--------curl --silent --location {{\field{\*\fldinst{HYPERLINK http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo }}{\fldrslt{http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo\ul0\cf0}}}}\f0\fs22  | sudo tee /etc/yum.repos.d/jenkins.repo\par
+And add the repository to your system with:\par
+---- sudo rpm --import {{\field{\*\fldinst{HYPERLINK https://pkg.jenkins.io/redhat/jenkins.io.key }}{\fldrslt{https://pkg.jenkins.io/redhat/jenkins.io.key\ul0\cf0}}}}\f0\fs22\par
+install the latest stable version of Jenkins\par
+------sudo yum install jenkins\par
+-------sudo systemctl start jenkins\par
+--------systemctl status jenkins\par
+----------sudo systemctl enable jenkins\par
+\b\fs24 Setting Up Jenkins\par
+\b0 ----after typing in web as, {{\field{\*\fldinst{HYPERLINK https://localhost:8080 }}{\fldrslt{https://localhost:8080\ul0\cf0}}}}\f0\fs24  will get jenkins set up form\par
+{\b{\field{\*\fldinst{HYPERLINK http://3.209.12.105:8080/login?from=%2F }}{\fldrslt{http://3.209.12.105:8080/login?from=%2F\ul0\cf0}}}}\b\f0\fs24\par
+\b0 Use the following command to print the password on your terminal:\par
+--------sudo cat /var/lib/jenkins/secrets/initialAdminPassword\par
+o/p:\par
+1570bea971aa4c858f7a486b22931382\par
+------ click on install suggetsed plugins then will get the admin form\par
+userid: sum \par
+passwd: sum\par
+admin: alekya mail: june19\par
+------entered into jenkins home\par
+{{\field{\*\fldinst{HYPERLINK http://3.209.12.105:8080/ }}{\fldrslt{http://3.209.12.105:8080/\ul0\cf0}}}}\f0\fs24\par
+\b\i ---------you\rquote ve successfully installed Jenkins on your CentOS system---------\par
+\i0\fs28\par
+Install kubectl (\highlight2 Slave\highlight0 ) on Linux -centos7\par
+\b0\fs24 Within the same instance install kubectl using following steps\par
+{{\field{\*\fldinst{HYPERLINK https://kubernetes.io/docs/tasks/tools/install-kubectl/ }}{\fldrslt{https://kubernetes.io/docs/tasks/tools/install-kubectl/\ul0\cf0}}}}\f0\fs24\par
+\par
+Download latest release\par
+\b > curl -LO {{\field{\*\fldinst{HYPERLINK https://storage.googleapis.com/kubernetes-release/release/`curl }}{\fldrslt{https://storage.googleapis.com/kubernetes-release/release/`curl\ul0\cf0}}}}\f0\fs24\par
+-s {{\field{\*\fldinst{HYPERLINK https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl }}{\fldrslt{https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl\ul0\cf0}}}}\b0\f0\fs24\par
+\par
+Make kubectl binary executable\par
+\b > chmod +x ./kubectl\par
+\b0\par
+Move Binary to path\par
+\b > sudo mv ./kubectl /usr/local/bin/kubectl\par
+\b0\par
+Test\par
+\b > kubectl version \par
+\b0\par
+>>>>>>>>>If you didn't get the version then follow the native package management:\par
+----------\b cat <<EOF > /etc/yum.repos.d/kubernetes.repo\par
+[kubernetes]\par
+name=Kubernetes\par
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64\par
+enabled=1\par
+gpgcheck=1\par
+repo_gpgcheck=1\par
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg {{\field{\*\fldinst{HYPERLINK https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg }}{\fldrslt{https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg\ul0\cf0}}}}\f0\fs24\par
+EOF\par
+\b0 >>>>>>>then run the following command to install kubectl in centos;\par
+\b ------yum install -y kubectl\par
+\b0 >>>>>>>>Test\par
+\b --------- kubectl version --client\par
+\par
+\fs28 Helm installation on centos \highlight2 Slave\highlight0 : From Script\par
+\b0 $ curl -fsSL -o get_helm.sh {{\field{\*\fldinst{HYPERLINK https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 }}{\fldrslt{https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3\ul0\cf0}}}}\f0\fs28\par
+$ chmod 700 get_helm.sh\par
+$ ./get_helm.sh\par
+$  helm version\par
+\par
+\b Joining master to slave:\par
+\b0 follow these steps in both master and slave;\par
+$ useradd alekya\par
+$ passwd alekya\par
+It will ask you to change the passwd then change  it as u want.\par
+$ visudo\par
+Make changes of follows; \par
+--------passwdauthentication to yes\par
+------# remove this before permit root login\par
+In master follow these steps:\par
+---- su - alekya\par
+-----ssh-keygen\par
+-----ssh-copy-id alekya@slaveprivateipaddress--(i.e, 172.31.66.66)\par
+-----sudo systemctl restart\par
+\par
+\b\fs32 Jenkins master slave configuration:\par
+\b0\fs28 Link: {{\field{\*\fldinst{HYPERLINK https://www.youtube.com/watch?v=NlwR_FEsE0A }}{\fldrslt{https://www.youtube.com/watch?v=NlwR_FEsE0A\ul0\cf0}}}}\f0\fs28\par
+created freestyle project using lable of node and added tool configuration path is as java path in remote server/ slave;\par
+Created one simple shell script and the build was success.\par
+\b\par
+\fs24\par
+\i\par
 }
  
